@@ -18,7 +18,7 @@ The present project aims to rescue the replication of Experiment 3, which used p
 
 Challenges involve recreating the experimental paradigm in line with the original and analyzing the data using the same statistical techniques. Adding other forms to guarantee the high quality of the experiment (e.g., attention checks, control) might also be challenging.
 
-[Link to repository}(https://github.com/psych251/todd2016_1_rescue/tree/main)
+[Link to repository](https://github.com/psych251/todd2016_1_rescue/tree/main)
 
 [Link to original study in repo](https://github.com/psych251/todd2016_1_rescue/blob/main/original_paper/todd-et-al-2016.pdf)
 
