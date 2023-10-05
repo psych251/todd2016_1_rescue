@@ -2,7 +2,7 @@
 title: "Replication of Does Seeing Faces of Young Black Boys 
 Facilitate the Identification of Threatening 
 Stimuli? by Todd et al. (2016, Psychological Science)"
-author: "Andrew Todd (andrew-todd@uiowa.edu)"
+author: "Mateus Mazzaferro (mazzafe@stanford.edu)"
 date: "`r format(Sys.time(), '%B %d, %Y')`"
 format:
   html:
@@ -10,13 +10,17 @@ format:
     toc_depth: 3
 ---
 
-<!-- Replication reports should all use this template to standardize reporting across projects.  These reports will be public supplementary materials that accompany the summary report(s) of the aggregate results. -->
-
 ## Introduction
 
-After reviewing the possible rescue projects available to students, a decision was made to attempt to rescue Todd et al. (2016) for mainly two reasons. First, the topic is highly relevant and has strong implications. The paper deals with anti-Black racism toward young boys, and the finding that the perception of young Black faces facilitates the recognition of guns says a lot about how stereotyping and racism function at a perceptive level. Second, the experimental paradigm itself seemed straightforward and easy to reproduce, but other aspects of the experiment (e.g., sample size, data analysis) seem to not have been done in the best way, and that includes the initial replication attempt. 
+After reviewing the possible rescue projects available to students, a decision was made to attempt to rescue the replication project from Todd et al. (2016) for mainly two reasons. First, the topic is highly relevant and has strong implications. The paper deals with anti-Black racism toward young boys, and the finding that the perception of young Black faces facilitates the recognition of certain objects or words says a lot about how stereotyping and racism function at a perceptive level. Second, the experimental paradigm itself seemed straightforward and easy to reproduce, but other aspects of the experiment (e.g., sample size, data analysis) seem to not have been done in the best way, and that includes the initial replication attempt. 
 
-[No abstract is needed.]  Each replication project will have a straightforward, no frills report of the study and results.  These reports will be publicly available as supplementary material for the aggregate report(s) of the project as a whole.  Also, to maximize project integrity, the intro and methods will be written and critiqued in advance of data collection.  Introductions can be just 1-2 paragraphs clarifying the main idea of the original study, the target finding for replication, and any other essential information.  It will NOT have a literature review -- that is in the original publication. You can write both the introduction and the methods in past tense.  
+The present project aims to rescue the replication of Experiment 3, which used photos of both Black boys and men, and "threatening" and "safe" words. Specifically, we are trying to rescue the replication of the following result: "Analyses of error-rate data revealed that...there was a significant Race of Prime × Target Word interaction, F(1, 61) = 32.30, p < .001, ηp2 = .35." For that, we will need access to the stimuli utilized in the experiment (i.e., images of faces of Black boys and a set of words to be categorized). In addition, the experiment will have to be programmed in the appropriate form (e.g., PsychoPy or Qualtrics). 
+
+Challenges involve recreating the experimental paradigm in line with the original and analyzing the data using the same statistical techniques. Adding other forms to guarantee the high quality of the experiment (e.g., attention checks, control) might also be challenging.
+
+[Link to repository}(https://github.com/psych251/todd2016_1_rescue/tree/main)
+
+[Link to original study in repo](https://github.com/psych251/todd2016_1_rescue/blob/main/original_paper/todd-et-al-2016.pdf)
 
 
 ## Summary of prior replication attempt
