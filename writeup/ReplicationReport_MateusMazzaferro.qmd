@@ -25,29 +25,33 @@ Challenges involve recreating the experimental paradigm in line with the origina
 
 ## Summary of prior replication attempt
 
-Based on the prior write-up, describe any differences between the original and 1st replication in terms of methods, sample, sample size, and analysis. Note any potential problems such as exclusion rates, noisy data, or issues with analysis. 
+The prior replication attempt had a substantially smaller sample size (effective N=26) than the original study (N=63). This decision was based on a a priori power analysis indicating a sample size of N = 24 for 95% power. Additionally, the original study was conducted in an in-person lab setting, while the replication attempt was conducted online using Mechanical Turk. ll other relevant criteria seem to be equal or comparable to the original study. 
 
 ## Methods
 
+“White participants completed sequential priming tasks in which they categorized threatening and non-threatening objects (toys and guns) and words after brief presentations of Black and White children’s faces.”
+
 ### Power Analysis
 
-Original effect size, power analysis for samples to achieve 80%, 90%, 95% power to detect that effect size.  Considerations of feasibility for selecting planned sample size.
+Original ηp2 = .22 which translates into an effect size of 0.53. Power analysis shows that I need 16 participants for 80% power, 20 for 90%, and 24 for 95% power. This effect size is for the 2 (race of prime: Black, White) × 2 (target object: gun, toy) repeated measures analysis of variance (ANOVA). Attaining this number of participants is easily feasible with MTurk. 
 
-How much power does your planned sample have for original effect? For an attenuated effect that is half the size of the original? 
-
-(If power analysis is not possible or precise, discuss more fully how you determined a sample size that would be sufficient for rescue.)
+Considering the initial replication attempt failed to find an effect, I will propose a sample closer to the original sample of the study, aiming for effective N = 60. According to GPower, a sample of N = 60 would have a power of near 1 to find the original effect size.  
 
 ### Planned Sample
 
-Planned sample size and/or termination rule, sampling frame, known demographics if any, preselection rules if any.
+We will recruit 66 participants to be close to the N of the original study.  We added 6, which is 10% of 60 to ensure we will still have enough participants after the exclusion criteria. We will exclude non-White participants in the analysis. We will also exclude participants who have less than 50% level of accuracy, as the original study did. 
 
 ### Materials
 
-All materials - can quote directly from original article - just put the text in quotations and note that this was followed precisely.  Or, quote directly and just point out exceptions to what was described in the original article.
+“The primes were 12 photos of boys (6 Black, 6 White) taken from the Child Affective Facial Expression set (LoBue & Thrasher, 2015). We selected these photos using the following criteria: The faces had to be easily categorized by race, to have a neutral expression, to have no idiosyncrasies (e.g., facial scars), and to be similar in actual age (mean age for Black faces = 4.98 years; mean age for White faces = 5.01 years; p > .250). Each photo was cropped so that it included only the head and was standardized in size. The target objects were 6 gun images taken from Payne (2001) and 6 toy images (e.g., a rattle) taken from online sources. The toy images were converted to grayscale and sized to match the gun images.”
 
 ### Procedure	
 
-Can quote directly from original article - just put the text in quotations and note that this was followed precisely.  Or, quote directly and just point out exceptions to what was described in the original article.
+Instead of beginning with a blank screen (500 ms) like in the original article, we began with a screen that instructed participants to “Press the spacebar to continue” after each trial. The rest of the procedures were the same. 
+
+“Each trial sequence began [..] followed by a face prime (200 ms), then a target object (200 ms), and finally a pattern mask (which remained on screen until participants responded). If participants did not respond within 500 ms, a message (“Please respond faster!”) appeared for 1 s. Each of the 12 face primes was paired once with each of the 12 target objects, which resulted in 144 randomly ordered experimental trials. Eight practice trials preceded the experimental trials.”
+
+Additionally, following the recommendation in a commentary in the previous replication attempt report, we will include a cover page for the study, as recommended by the author: “This task is investigating object recognition under distracting conditions. You will be asked to quickly identify objects will being distracted by other stimuli.”
 
 ### Controls
 
