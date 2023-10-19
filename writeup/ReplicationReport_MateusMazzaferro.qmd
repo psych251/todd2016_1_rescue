@@ -25,11 +25,13 @@ Challenges involve recreating the experimental paradigm in line with the origina
 
 ## Summary of prior replication attempt
 
-The prior replication attempt had a substantially smaller sample size (effective N=26) than the original study (N=63). This decision was based on a a priori power analysis indicating a sample size of N = 24 for 95% power. Additionally, the original study was conducted in an in-person lab setting, while the replication attempt was conducted online using Mechanical Turk. ll other relevant criteria seem to be equal or comparable to the original study. 
+The prior replication attempt had a substantially smaller sample size (effective N=26) than the original study (N=63). This decision was based on a a priori power analysis indicating a sample size of N = 24 for 95% power. Additionally, the original study was conducted in an in-person lab setting, while the replication attempt was conducted online using Mechanical Turk. All other relevant criteria seem to be equal or comparable to the original study. 
 
 ## Methods
 
 “White participants completed sequential priming tasks in which they categorized threatening and non-threatening objects (toys and guns) and words after brief presentations of Black and White children’s faces.”
+
+The present rescue attempt will keep the same methodological paradigm and recycle the JavaScript code utilized by the first replication attempt. Additionally, this rescue attempt will collect data online using Prolific as opposed to Mechanical Turk.
 
 ### Power Analysis
 
@@ -55,18 +57,23 @@ Additionally, following the recommendation in a commentary in the previous repli
 
 ### Controls
 
-What attention checks, positive or negative controls, or other quality control measures are you adding so that a (positive or negative) result will be more interpretable?
-
+The experiment already contains built-in attention checks as it alerts the participant to pay attention if they are too slow to react to the image. Additionally, the study protocol requires that those with less than 50% accuracy rate be excluded. We will also exclude non-white participants as the original study and the replication attempt only had white participants. 
 
 ### Analysis Plan
 
-Can also quote directly, though it is less often spelled out effectively for an analysis strategy section.  The key is to report an analysis strategy that is as close to the original - data cleaning rules, data exclusion rules, covariates, etc. - as possible.  
+“We decided a priori to exclude data from participants with below-chance accuracy (i.e., errors on > 50% of trials) on the weapon identification task.”
 
-**Clarify key analysis of interest here**  You can also pre-specify additional analyses you plan to do.
+“Before analysis, we excluded errors and RTs less than 100 ms. RTs exceeding the 500-ms deadline were excluded from analyses, and responses on those trials were treated as errors. We then subjected the remaining RTs to a log transformation (Payne, 2001); however, for interpretive ease, we report raw RTs. A 2 (race of prime: Black, White) × 2 (target object: gun, toy) repeated measures analysis of variance (ANOVA) revealed a significant interaction.” The key test will be the interaction effect of this 2 X 2 ANOVA.
+
+We will only analyze data from people who indicated their race as White.
 
 ### Differences from Original Study and 1st replication
 
-Explicitly describe known differences in sample, setting, procedure, and analysis plan from original study.  The goal, of course, is to minimize those differences, but differences will inevitably occur.  Also, note whether such differences are anticipated to make a difference based on claims in the original article or subsequent published research on the conditions for obtaining the effect.
+The only difference between the original study and the replication attempt in terms of procedure is that the replication attempt was made online and the original experiment was conducted in-person. 
+
+The present rescue attempt is going to try to get closer to the original study by aiming at a sample size closer to the original. Additionally, this rescue will use Prolific as opposed to MTurk. Since evidence has shown that Profilic consistently delivers higher quality data, the differences to an in-person setting could be further reduced. 
+
+No difference in claims is expected to occur from the original study. 
 
 ### Methods Addendum (Post Data Collection)
 
@@ -76,7 +83,7 @@ You can comment this section out prior to final report with data collection.
   Sample size, demographics, data exclusions based on rules spelled out in analysis plan
 
 #### Differences from pre-data collection methods plan
-  Any differences from what was described as the original plan, or “none”.
+  None
 
 
 ## Results
@@ -84,7 +91,7 @@ You can comment this section out prior to final report with data collection.
 
 ### Data preparation
 
-Data preparation following the analysis plan.
+Data was be imported and wrangled into a tidy format, renaming variables for better interpretability. Categorical variables were factored and relabeled. 
 	
 ```{r include=F}
 ### Data Preparation
@@ -100,11 +107,11 @@ Data preparation following the analysis plan.
 
 ### Results of control measures
 
-How did people perform on any quality control checks or positive and negative controls? 
+X people were excluded based on not meeting screener criteria (e.g., identifying as White). An additional X trials were excluded for being too slow (>500 ms) or too quick (<100 ms). 
 
 ### Confirmatory analysis
 
-The analyses as specified in the analysis plan.  
+The mean reaction time for each condition was calculated for each participant, then the mean reaction time for each condition across all participants was calculated. A repeated measures ANOVA will be computed to probe for the significance of the Race of Prime X Object Classification interaction. RT logs will be used as per the original study and replication attempt. Bar plots with 95% error bars were computed using ggplot2. 
 
 *Three-panel graph with original, 1st replication, and your replication is ideal here*
 
@@ -114,7 +121,7 @@ Any follow-up analyses desired (not required).
 
 ## Discussion
 
-## Mini meta analysis
+## Mini meta-analysis
 Combining across the original paper, 1st replication, and 2nd replication, what is the aggregate effect size? 
 
 ### Summary of Replication Attempt
