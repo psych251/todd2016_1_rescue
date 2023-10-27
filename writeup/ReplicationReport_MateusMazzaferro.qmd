@@ -22,6 +22,7 @@ Challenges involve recreating the experimental paradigm in line with the origina
 
 [Link to original study in repo](https://github.com/psych251/todd2016_1_rescue/blob/main/original_paper/todd-et-al-2016.pdf)
 
+[Link to experiment on Pavlovia](https://run.pavlovia.org/mateusmazza/rescue_project/)
 
 ## Summary of prior replication attempt
 
@@ -83,8 +84,6 @@ You can comment this section out prior to final report with data collection.
   Sample size, demographics, data exclusions based on rules spelled out in analysis plan
 
 #### Differences from pre-data collection methods plan
-  None
-
 
 ## Results
 
@@ -97,12 +96,52 @@ Data was be imported and wrangled into a tidy format, renaming variables for bet
 ### Data Preparation
 
 #### Load Relevant Libraries and Functions
+library(tidyverse)
+#install.packages("rstatix")
+library(rstatix)
+library(ggplot2)
+#install.packages("ggpubr")
+library(ggpubr)
+library(lme4)
+#install.packages("ez")
+library(ez)
 
 #### Import data
+dir_path <- "C:/Users/mateu/todd2016_1_rescue/data"
+csv_files <- list.files(dir_path, pattern = "^results_.*\\.csv$", full.names = TRUE)
+combined_data <- data.frame()
+
+for (file in csv_files) {
+  data <- read_csv(file)
+  combined_data <- bind_rows(combined_data, data)
+}
 
 #### Data exclusion / filtering
 
-#### Prepare data for analysis - create columns etc.
+processed_dat <- combined_data %>% 
+  # filtering responses that were too slow
+  
+  filter(!(is.na(key_resp.keys ))) %>% 
+  #selecting relevant coluns
+  
+  select(participant, session, face, object,
+         key_resp.keys, key_resp.rt, trials.thisTrialN, trials.thisIndex) %>% 
+         
+         # add race/ethnicity checks later!
+         
+         
+      
+  #### Prepare data for analysis - create columns etc.
+  mutate(ID = participant,
+         StimRace = ifelse(grepl("w", face), "White", "Black"),
+         StimObj = ifelse(grepl("g", object), "Gun", "Toy"),
+         ReactionTime = key_resp.rt, 
+         LogRT = log(key_resp.rt),
+         Correct = ifelse(StimObj == "Gun" & key_resp.keys == "p" | StimObj == "Toy" & key_resp.keys == "q" , 1, 0)) %>% 
+  select(-c(participant, face, object, key_resp.rt))
+
+
+
 ```
 
 ### Results of control measures
@@ -111,13 +150,111 @@ X people were excluded based on not meeting screener criteria (e.g., identifying
 
 ### Confirmatory analysis
 
-The mean reaction time for each condition was calculated for each participant, then the mean reaction time for each condition across all participants was calculated. A repeated measures ANOVA will be computed to probe for the significance of the Race of Prime X Object Classification interaction. RT logs will be used as per the original study and replication attempt. Bar plots with 95% error bars were computed using ggplot2. 
+A repeated measures ANOVA will be computed to probe for the significance of the Race of Prime X Object Classification interaction. RT logs will be used as per the original study and replication attempt. Box plots were generated for visualization. Additionally, bar plots with with 95% error bars were computed using ggplot2. 
+
+```{r}
+# Checking accuracy
+acc_dat <- processed_dat %>% 
+  group_by(ID, StimRace, StimObj) %>% 
+  summarise(mean_accuracy = mean(Correct)) %>% 
+  filter(mean_accuracy > 0.499) 
+
+
+# Turning into factors for ANOVA
+processed_dat$ID <-  as_factor(processed_dat$ID)
+processed_dat$StimRace <-  as_factor(processed_dat$StimRace)
+processed_dat$StimObj <-  as_factor(processed_dat$StimObj)
+
+
+#Looking at summarized data
+sum_dat <- processed_dat %>% 
+  group_by(StimRace, StimObj, ID) %>% 
+  get_summary_stats(LogRT, type = "mean_sd")
+```
+
+## Plots
+```{r}
+
+# Boxplot for visualization
+bxp <- processed_dat %>% 
+  ggboxplot( x = "StimObj", y = "ReactionTime",
+  color = "StimRace", palette = "jco"
+  )
+bxp
+
+```
+
+
+```{r}
+#Barplot with CI bars
+
+sum_dat_plot <- processed_dat %>%
+  group_by(StimObj, StimRace) %>%
+  summarise( 
+    n=n(),
+    mean=mean(ReactionTime),
+    sd=sd(ReactionTime)
+  ) %>%
+  mutate( se=sd/sqrt(n))  %>%
+  mutate( ci=se * qt((1-0.05)/2 + .5, n-1))
+
+
+barplot <- sum_dat_plot %>% 
+  ggplot(aes(x=StimObj, y=mean, fill=StimRace)) +
+  geom_bar(stat = "identity", position=position_dodge()) +
+  geom_errorbar(aes(ymin=mean-ci, ymax=mean+ci), width=.2,
+                 position=position_dodge(.9))
+  
+barplot + scale_fill_brewer(palette="Paired")
+
+
+```
+
+
+
+```{r}
+# running 2x2 repeated measures ANOVA 
+
+aov_model <- aov( data = processed_dat, 
+  LogRT ~ StimObj*StimRace + Error(ID/(StimObj*StimRace)))
+
+summary(aov_model)
+```
+
+
+```{r}
+### ALTERNATIVE
+
+# Perform the repeated measures ANOVA
+anova_result <- ezANOVA(data = processed_dat,
+                        dv = .(LogRT),
+                        wid = .(ID),
+                        within = .(StimRace, StimObj),
+                        detailed = TRUE)
+
+print(anova_result)
+
+```
+
 
 *Three-panel graph with original, 1st replication, and your replication is ideal here*
 
 ### Exploratory analyses
 
 Any follow-up analyses desired (not required).  
+
+```{r}
+
+# Consider this model
+
+lmer( data = processed_dat, 
+      LogRT ~ StimObj*StimRace + (1|ID))
+
+
+
+
+```
+
 
 ## Discussion
 
