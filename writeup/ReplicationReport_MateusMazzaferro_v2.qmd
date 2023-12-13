@@ -1,0 +1,713 @@
+---
+title: "Replication of Does Seeing Faces of Young Black Boys 
+Facilitate the Identification of Threatening 
+Stimuli? by Todd et al. (2016, Psychological Science)"
+author: "Mateus Mazzaferro (mazzafe@stanford.edu)"
+date: "`r format(Sys.time(), '%B %d, %Y')`"
+format:
+  html:
+    toc: true
+    toc_depth: 3
+---
+
+## Introduction
+
+The present project aims to rescue the replication of Experiment 1 of Todd et al. (2016, Psychological Science), which used photos of Black and White boys as primes for the categorization of objects (gun vs. toy) in a reaction time experiment. This experiment contributed to the literature on the perceptual basis of racism and stereotyping. 
+
+Specifically, the rescue will focus on attempting to replicate the results of an interaction of prime of race and speed of object categorization. For that, access to the stimuli utilized in the experiment (i.e., images of faces of boys and a set of images of objects to be categorized) was needed. In addition, the experiment was programmed in PsychoPy. 
+
+Challenges involved recreating the experimental paradigm in line with the original and analyzing the data using the same statistical techniques. Adding other controls to guarantee the high quality of the experiment (e.g., exclusion criteria) was also challenging.
+
+[Link to repository](https://github.com/psych251/todd2016_1_rescue/tree/main)
+
+[Link to original study in repo](https://github.com/psych251/todd2016_1_rescue/blob/main/original_paper/todd-et-al-2016.pdf)
+
+[Link to experiment on Pavlovia](https://run.pavlovia.org/mateusmazza/rescue_project/)
+
+## Summary of prior replication attempt
+
+The prior replication attempt had a substantially smaller sample size (effective N=26) than the original study (N=63). This decision was based on a a priori power analysis indicating a sample size of N = 24 for 95% power. Additionally, the original study was conducted in an in-person lab setting, while the replication attempt was conducted online using Mechanical Turk. All other relevant criteria seem to be equal or comparable to the original study. 
+
+## Methods
+
+“White participants completed sequential priming tasks in which they categorized threatening and non-threatening objects (toys and guns) and words after brief presentations of Black and White children’s faces.”
+
+The present rescue attempt will keep the same methodological paradigm and recode the original experiment in PsychoPy. Additionally, this rescue attempt will collect data online using Prolific as opposed to Mechanical Turk.
+
+### Power Analysis
+
+The original effect size was ηp2 = .22 which translates into an effect size of 0.53. Power analysis shows that I need 16 participants for 80% power, 20 for 90%, and 24 for 95% power. This effect size is for the 2 (race of prime: Black, White) × 2 (target object: gun, toy) repeated measures analysis of variance (ANOVA). Attaining this number of participants is easily feasible with Prolific.  
+
+Considering the initial replication attempt failed to find an effect, I will propose a sample closer to the original sample of the study, aiming for effective N = 60. According to G*Power, a sample of N = 60 would have a power of near 1 to find the original effect size.  
+
+A sensitivity power analysis with G*Power revealed that, with 60 participants, this experiment has 80% power to detect an effect size as small as 0.07.
+
+### Planned Sample
+
+We will recruit 66 participants to be close to the N of the original study.  We added 6, which is 10% of 60 to ensure we will still have enough participants after the exclusion criteria. We will exclude non-White participants in the analysis. We will also exclude participants who have less than 60% level of accuracy. The original study excluded based on 50% accuracy or lower (chance-level), meaning that a participant who guesses every single trial might still have a reasonable chance of not being excluded. The chance of a participant reaching 60% accuracy over 144 trials is: 
+
+```{r}
+
+1- pbinom(0.6*144, 144, 0.5)
+
+```
+
+
+### Materials
+
+“The primes were 12 photos of boys (6 Black, 6 White) taken from the Child Affective Facial Expression set (LoBue & Thrasher, 2015). We selected these photos using the following criteria: The faces had to be easily categorized by race, to have a neutral expression, to have no idiosyncrasies (e.g., facial scars), and to be similar in actual age (mean age for Black faces = 4.98 years; mean age for White faces = 5.01 years; p > .250). Each photo was cropped so that it included only the head and was standardized in size. The target objects were 6 gun images taken from Payne (2001) and 6 toy images (e.g., a rattle) taken from online sources. The toy images were converted to grayscale and sized to match the gun images.”
+
+### Procedure	
+
+Instead of beginning with a blank screen (500 ms) like in the original article, we began with a screen that instructed participants to “Press the space bar to continue” after each trial. The rest of the procedures were the same. After feedback from the original author, we edited visual features of the experimental paradigm to the best of our ability to match the original experiment. 
+
+“Each trial sequence began [..] followed by a face prime (200 ms), then a target object (200 ms), and finally a pattern mask (which remained on screen until participants responded). If participants did not respond within 500 ms, a message (“Please respond faster!”) appeared for 1 s. Each of the 12 face primes was paired once with each of the 12 target objects, which resulted in 144 randomly ordered experimental trials. Eight practice trials preceded the experimental trials.”
+
+This replication included 12 practice trials instead of 8. 
+
+Additionally, following the recommendation in a commentary in the previous replication attempt report, we will include a cover page for the study, as recommended by the author: “This task is investigating object recognition under distracting conditions. You will be asked to quickly identify objects will being distracted by other stimuli.”
+
+### Controls
+
+The experiment already contains built-in attention checks as it alerts the participant to pay attention if they are too slow to react to the image. Additionally, the rescue replication will exclude participants with less than 60% accuracy rate, virtually eliminating participants who do not complete the experiment in good faith. We will also exclude non-white participants, as did the original study and the 1st replication attempt. 
+
+### Analysis Plan
+
+“Before analysis, we excluded errors and RTs less than 100 ms. RTs exceeding the 500-ms deadline were excluded from analyses, and responses on those trials were treated as errors. We then subjected the remaining RTs to a log transformation (Payne, 2001); however, for interpretive ease, we report raw RTs. A 2 (race of prime: Black, White) × 2 (target object: gun, toy) repeated measures analysis of variance (ANOVA) revealed a significant interaction.” The key test will be the interaction effect of this 2 X 2 ANOVA.
+
+We will only analyze data from people who indicated their race as White.
+
+In the original paper, a repeated measures ANOVA yielded the following results: "A 2 (race of prime: Black, White) × 2 (target object: gun, toy) repeated measures analysis of variance (ANOVA) revealed a significant interaction, F(1, 62) = 17.21, p < .001, ηp2 = .22."
+
+In the first replication attempt, results of the same analysis were as follows: "One-way repeated-measures analysis of variance (ANOVA) revealed no significant interaction effect of condition on reaction times: F(1, 23) = 1.3, p = .27."
+
+### Differences from Original Study and 1st replication
+
+The only difference between the original study and the replication attempt in terms of procedure is that the replication attempt was made online and the original experiment was conducted in-person. 
+
+The present rescue attempt is going to try to get closer to the original study by aiming at a sample size closer to the original. Additionally, this rescue will use Prolific as opposed to MTurk. Since evidence has shown that Profilic consistently delivers higher quality data, the differences to an in-person setting could be further reduced. We will also raise the chance-exclusion cut-off to 60%. 
+
+No difference in claims is expected to occur from the original study. 
+
+### Methods Addendum (Post Data Collection)
+
+#### Actual Sample
+ 
+We collected data from 71 Prolific participants. We excluded 1 participant for being non-white and 12 participants due to accuracy rates compatible with chance. An additional 3 participants were excluded passively for not having valid data (i.e., people that clicked on the experiment but did not follow through with it). The effective sample size was N=55. 
+
+#### Differences from pre-data collection methods plan
+
+One important observation is that this data had to be recollected due to an error in the instructions of the experiment. No additional changes exist between the present analysis and the original methods plan. 
+
+## Results
+
+### Data preparation
+
+Data was imported and wrangled into a tidy format, renaming variables for better interpretability. Categorical variables were factored and relabeled. 
+Loading libraries
+```{r, message=FALSE}
+### Load Relevant Libraries and Functions
+library(tidyverse)
+#install.packages("rstatix")
+library(rstatix)
+library(ggplot2)
+#install.packages("ggpubr")
+library(ggpubr)
+library(lme4)
+#install.packages("ez")
+library(ez)
+library(ggthemes)
+#install.packages("reghelper")
+library(reghelper)
+#install.packages("apaTables")
+library(apaTables)
+```
+
+Importing data
+```{r, message=FALSE}
+dir_path <- "C:/Users/mateu/OneDrive/Desktop/Stanford/01_Fall 2023/Psych Exp Methods/data_prolific_v2"
+csv_files <- list.files(dir_path, pattern = "2023-12-12.*\\.csv$", full.names = TRUE)
+combined_data <- data.frame()
+
+for (file in csv_files) {
+  data <- read_csv(file)
+  combined_data <- bind_rows(combined_data, data)
+}
+
+# Storing raw data so I don't have to run this loop all the time
+combined_data_raw <- combined_data
+```
+
+Writing anonimized dataset for reproducibility
+```{r}
+
+data_csv <- combined_data_raw %>% 
+  select(-c(participant,session,study_id, OS)) 
+
+write.csv(data_csv, "C:/Users/mateu/todd2016_1_rescue/data\\data_csv.csv")
+
+```
+
+How many participants in the dataset?
+```{r}
+t1 <- table(combined_data$participant)
+nrow(t1)
+
+# OBS: this includes people who did not finish the experiment
+```
+
+### Data exclusion / filtering
+```{r}
+#Are there non-whites?
+table(combined_data$key_resp_race_check.keys) 
+
+non_whites <- combined_data %>% 
+  select(participant, key_resp_race_check.keys) %>% 
+  filter(key_resp_race_check.keys == "a"| 
+           key_resp_race_check.keys =="b"| 
+           key_resp_race_check.keys =="n")
+
+non_whites
+
+
+```
+
+
+```{r}
+processed_dat <- combined_data %>% 
+  #filtering non-whites
+  filter(!(participant == "5c97df1f9e1eff001662ed96" |
+             participant == "603421c858a3bd213d7c24b2"|
+             participant == "613e002e81f4b2409b531dbd"))
+
+# N check
+t2 <- table(processed_dat$participant)
+nrow(t2)
+
+```
+
+
+# Preparing data for analysis - create columns etc.
+```{r}
+
+processed_dat <- processed_dat %>% 
+   mutate(
+         ID = participant,
+         StimRace = ifelse(grepl("w", face), "White", "Black"),
+         StimObj = ifelse(grepl("g", object), "Gun", "Toy"),
+         ReactionTime = key_resp.rt, 
+         LogRT = log(key_resp.rt),
+         Correct = ifelse(StimObj == "Gun" & key_resp.keys == "p" | StimObj == "Toy" & key_resp.keys == "q" ,1,  0),
+         too_slow = ifelse(is.na(too_slow_resp.keys), FALSE, TRUE)
+         ) %>% 
+   mutate(Correct = ifelse(too_slow == T, 0, Correct )) %>% 
+  filter(!(is.na(Correct))) %>% 
+  select(c(ID, StimRace, StimObj, ReactionTime, LogRT, Correct, too_slow))
+
+# N check
+t3 <- table(processed_dat$ID)
+nrow(t3)
+
+```
+> 3 additional passive exclusions, probably due to there not being valid data points. 
+
+### Results of control measures
+
+Checking accuracy
+```{r}
+
+acc_dat <- processed_dat  %>% 
+  group_by(ID) %>% 
+  summarise(mean_accuracy = mean(Correct)) 
+
+acc_dat
+
+```
+
+
+Excluding participants due to high likelihood of being guessing:
+```{r}
+exclude_list <- acc_dat %>% 
+  filter(mean_accuracy < 0.6) %>% 
+  select(-c(mean_accuracy)) 
+
+exclude_list <- c(exclude_list$ID) # N = 12 people
+
+processed_dat <- processed_dat %>% 
+  filter(!(ID %in% exclude_list))
+
+
+# N check
+t3 <- table(processed_dat$ID)
+nrow(t3)
+
+```
+3 people were excluded based on not meeting screener criteria (e.g., identifying as White). An additional 11 people were excluded due to accuracy rates compatible with chance level (below 60%). 3 people were passively exclude for lack of valid data points. 
+
+
+Filtering responses that were too slow or too fast
+```{r}
+
+processed_dat <- processed_dat %>% 
+  filter(ReactionTime > 0.1 & too_slow == F)
+
+# N check
+t4 <- table(processed_dat$ID)
+nrow(t4)
+
+```
+
+
+
+### Confirmatory analysis
+
+A repeated measures ANOVA will be computed to probe for the significance of the Race of Prime X Object Classification interaction. RT logs will be used as per the original study and replication attempt. Box plots were generated for visualization. Additionally, bar plots with with 95% error bars were computed using ggplot2. 
+
+# Preparing for analyses
+```{r}
+# Turning into factors for ANOVA
+processed_dat$ID <-  as_factor(processed_dat$ID)
+processed_dat$StimRace <-  as_factor(processed_dat$StimRace)
+processed_dat$StimObj <-  as_factor(processed_dat$StimObj)
+
+
+#Looking at summarized data
+sum_dat <- processed_dat %>% 
+  filter(Correct == 1) %>% 
+  group_by(StimRace, StimObj, ID) %>% 
+  get_summary_stats(LogRT, type = "mean_sd")
+
+sum_dat
+```
+
+
+## Plots
+
+```{r}
+#Barplot with CI bars
+
+sum_dat_plot <- processed_dat %>%
+  filter(Correct == 1) %>% 
+  group_by(StimObj, StimRace) %>%
+  summarise( 
+    n=n(),
+    mean=mean(ReactionTime),
+    sd=sd(ReactionTime)
+  ) %>%
+  mutate( se=sd/sqrt(n))  %>%
+  mutate( ci=se * qt((1-0.05)/2 + .5, n-1))
+
+
+barplot_rescue <- sum_dat_plot %>% 
+  ggplot(aes(x=StimObj, y=mean, fill=StimRace)) +
+  geom_bar(stat = "identity", position=position_dodge()) +
+  geom_errorbar(aes(ymin=mean-ci, ymax=mean+ci), width=.2,
+                 position=position_dodge(.9)) +
+  ggthemes::theme_few() +
+  coord_cartesian( ylim = c(0.15, 0.5)) + 
+  scale_fill_brewer(palette="Paired") +
+  ggtitle( "Rescue Attempt" ) 
+
+barplot_rescue
+
+
+```
+
+
+Running 2x2 repeated measures ANOVA 
+```{r}
+# ANOVA was not working due to one infinite value, so deleting this value
+
+processed_dat <- processed_dat %>% 
+  filter(Correct == 1) %>% 
+  filter(is.finite(LogRT))
+
+aov_model <- aov( data = processed_dat, 
+  LogRT ~ StimObj*StimRace + Error(ID/(StimObj*StimRace)))
+
+summary(aov_model)
+
+```
+
+Interaction is marginally significant (p = 0.06) with this model. 
+
+
+### Exploratory analysis
+
+Now considering a mixed-effects model that is more appropriate to handle unbalanced design:
+
+```{r}
+
+# Consider this model
+
+lmm <- lmerTest::lmer( data = processed_dat, 
+      LogRT ~ StimObj*StimRace + (1|ID))
+
+summary(lmm)
+
+simple_slopes(lmm)
+
+```
+In this model, we see a significant interaction of object and race of prime at the 1% level. Simple slopes analysis indicates there is an effect of race for gun, but not for toy. 
+
+## Parallel replication
+
+The original author of the study demonstrated interest in running a parallel replication attempt with an undergrad pool of participants at his institution. He collected data for N = 168 participants. In the following, I am going to analyze his data as well and include in my report and mini meta-analysis. 
+
+#### Demographics
+
+Importantly, this undergraduate convenience sample is not homogeneously white, as is the case with the other samples. Below I investigate the ethnic/racial composition of the sample and create a white subsample. 
+
+```{r}
+
+demo_par <- readxl::read_excel("C:/Users/mateu/todd2016_1_rescue/data/parallel_replication_demographics.xlsx") %>% 
+  select(Subject, subrace, subrace_open) %>% 
+  mutate(race_ethnicity = case_when(
+    subrace == 1 ~ "Asian, Asian American, or Pacific Islander",
+    subrace == 2 ~ "Black or African American",
+    subrace == 3 ~ "Latino/a/x/e or Hispanic",
+    subrace == 4 ~ "Native American",
+    subrace == 5 ~ "White or European American",
+    subrace == 6 ~ "Mixed or Multiracial",
+    subrace == 7 ~ "Middle Eastern or North African",
+    subrace == 8 ~ "Prefer not to respond",
+    TRUE ~ "Unknown"))
+
+prop.table(table(demo_par$race_ethnicity))
+
+```
+
+Only 13% (N = 23) of the sample is white. For power purposes, I will do the main analysis with the whole sample for now, but will create a subsample and run the ANOVA for comparison. 
+
+
+```{r}
+data_par_raw <- readxl::read_excel("C:/Users/mateu/todd2016_1_rescue/data/parallel_replication_data.xlsx")
+
+data_par <- data_par_raw %>% 
+  select(Subj, race_prime, target, RT, Correct) 
+
+# N check
+nrow(table(data_par$Subj))
+
+# Checking accuracy
+acc_dat_par <- data_par  %>% 
+  group_by(Subj) %>% 
+  summarise(mean_accuracy = mean(Correct)) 
+
+hist(acc_dat_par$mean_accuracy)
+```
+
+Exclude people with accuracy below 60%
+```{r}
+exclude_list_par <- acc_dat_par %>% 
+  filter(mean_accuracy < 0.6) %>% 
+  select(-c(mean_accuracy)) 
+
+exclude_list_par <- c(exclude_list_par$Subj) # N = 7 people
+
+data_par <- data_par %>% 
+  filter(!(Subj %in% exclude_list_par))
+
+# N check
+nrow(table(data_par$Subj))
+
+```
+
+Filtering out responses that were too slow (> 500 ms) or too fast (< 100 ms)
+```{r}
+data_par <- data_par %>% 
+  filter(RT > 0.1 | RT < 500) 
+
+# N check
+nrow(table(data_par$Subj))
+
+```
+
+Preparing for analyses
+```{r}
+# Turning into factors for ANOVA
+data_par$Subj <-  as_factor(data_par$Subj)
+data_par$race_prime <-  as_factor(data_par$race_prime)
+data_par$target <-  as_factor(data_par$target)
+
+
+#Looking at summarized data
+sum_dat_par <- data_par %>% 
+  filter(Correct == TRUE) %>% 
+  mutate(LogRT = log(RT)) %>% 
+  group_by(race_prime, target, Subj) %>% 
+  get_summary_stats(LogRT, type = "mean_sd")
+
+sum_dat_par
+```
+
+Parallel replication plot
+```{r}
+#Barplot with CI bars
+
+sum_dat_plot_par <- data_par %>%
+  filter(Correct == T) %>% 
+  group_by(race_prime, target) %>%
+  summarise( 
+    n=n(),
+    mean=mean(RT),
+    sd=sd(RT)
+  ) %>%
+  mutate( se=sd/sqrt(n))  %>%
+  mutate( ci=se * qt((1-0.05)/2 + .5, n-1))
+
+
+barplot_par <- sum_dat_plot_par %>% 
+  ggplot(aes(x=target, y=mean, fill=race_prime)) +
+  geom_bar(stat = "identity", position=position_dodge()) +
+  geom_errorbar(aes(ymin=mean-ci, ymax=mean+ci), width=.2,
+                 position=position_dodge(.9)) +
+  ggthemes::theme_few() +
+  guides(fill = F) +
+  coord_cartesian( ylim = c(150, 500)) + 
+  scale_fill_brewer(palette="Paired") +
+  scale_x_discrete(limits = rev) +
+  ggtitle( "Parallel Replication Attempt" ) 
+
+barplot_par
+```
+
+Data analysis of parallel replication attempt
+```{r}
+# log transforming
+data_par <- data_par %>% 
+  mutate(LogRT = log(RT))
+         
+# repeated measures ANOVA
+
+aov_model_par <- aov( data = data_par, 
+  LogRT ~ target*race_prime + Error(Subj/(target*race_prime)))
+
+summary(aov_model_par)
+
+
+```
+Interaction is significant at the 5% level in this model. 
+
+### Exploratory analysis of parallel replication
+```{r}
+# Consider this model
+
+lmm_par <- lmerTest::lmer( data = data_par, 
+      LogRT ~ target*race_prime + (1|Subj))
+
+summary(lmm_par) 
+
+simple_slopes(lmm_par) 
+
+```
+Interaction is marginally significant in this model and simple slopes indicates an effect of race for guns. 
+
+Below I investigate the effect by subsampling only white participants. 
+```{r}
+#Creating white subject list
+white_subj_list <- demo_par %>% 
+  filter(subrace == 5) %>% 
+  select(Subject)
+
+white_subj_list <- c(white_subj_list$Subject)
+
+#Filtering the dataset
+data_par_w <- data_par %>% 
+  filter(Subj %in% white_subj_list)
+
+#Running ANOVA 
+aov_model_par_w <- aov( data = data_par_w, 
+  LogRT ~ target*race_prime + Error(Subj/(target*race_prime)))
+
+summary(aov_model_par_w)
+
+```
+The interaction is not significant at the 5% level a smaller sample (N=23) of white participants. 
+
+
+### Four-panel graph 
+
+The original study does not have a plot, so I am creating one based on table results
+```{r}
+# Computing data from table in original paper
+data_barplot_original <- tibble( 
+            MeanRT = c(296.6, 287.7, 255.8, 261.9),
+            sd = c(30.7, 30.7, 35.0, 37.4 ),
+            n = c(63, 63, 63, 63),
+            StimRace = c("Black", "White", "Black", "White"),
+            StimObj = c( "Toy", "Toy", "Gun", "Gun"),
+            se=sd/sqrt(n),
+            ci=se * qt((1-0.05)/2 + .5, n-1))
+
+# Creating barplot
+barplot_original <- data_barplot_original  %>% 
+  ggplot(aes(x=StimObj, y=MeanRT, fill=StimRace)) +
+  guides(fill = F) +
+  geom_bar(stat = "identity", position=position_dodge()) +
+  geom_errorbar(aes(ymin=MeanRT-ci, ymax=MeanRT+ci), width=.2,
+                 position=position_dodge(.9)) +
+  ggthemes::theme_few() +
+  coord_cartesian( ylim = c(150, 500)) + 
+  scale_fill_brewer(palette="Paired") +
+  ggtitle("Original") +
+  scale_x_discrete(limits = rev) 
+            
+barplot_original
+```
+
+
+Recreating first replication attempt plot
+```{r}
+#Creating dataset from project report
+data_barplot_1strep <- data_frame( 
+            MeanRT = c(435.0216, 433.6726, 449.5880, 447.5060),
+            StimRace = c("Black", "White", "Black", "White"),
+            StimObj = c( "Toy", "Toy", "Gun", "Gun"),
+            ci.lo = c(414.3615, 410.6880, 440.6488, 438.9164),
+            ci.hi = c(455.6817, 456.6572, 458.5272, 456.0956)
+)
+
+
+# Creating barplot
+barplot_1strep <- data_barplot_1strep  %>% 
+  ggplot(aes(x=StimObj, y=MeanRT, fill=StimRace)) +
+  guides(fill = "none") +
+  geom_bar(stat = "identity", position=position_dodge()) +
+  geom_errorbar(aes(ymin=ci.lo, ymax=ci.hi), width=.2,
+                 position=position_dodge(.9)) +
+  ggthemes::theme_few() +
+  coord_cartesian( ylim = c(150, 500)) + 
+  scale_fill_brewer(palette="Paired") +
+  ggtitle("1st Replication") +
+  scale_x_discrete(limits = rev) 
+
+barplot_1strep
+```
+
+```{r}
+
+#Arranging plots side by side
+
+all_plots <- ggarrange( 
+  barplot_original, 
+  barplot_1strep,
+  barplot_rescue + theme(legend.position = c(0.8, 0.8)),
+  barplot_par,
+  nrow = 1,
+  widths = c(3, 3, 3, 3))
+
+ggsave("Arranged plots.jpg", plot = all_plots,
+       width = 14)
+
+knitr::include_graphics("Arranged plots.jpg")
+
+```
+
+# Discussion
+
+## Summary of Replication Attempt
+
+The present replication attempt found a marginally interaction effect of race of prime and reaction time of object categorization in a Prolific sample of 54 white participants between 18-35 years old. When using a more appropriate method (mixed-effects model), the interaction emerged more clearly and a significant effect of race of prime was found for the categorization of guns, but not for toys. The effect size was not as strong as observed in the original study (partial eta squared of 0.06 as opposed to 0.22). 
+
+Additionally, the author of the original study ran a parallel replication attempt with an undergrad participant pool at their institution. This experiment yielded a significant interaction of race of prime and object classification at the 5% significance level. From exploratory analysis with mixed effects models, as well as from patterns in the graph, it seems like the interaction is driven by a difference in reaction time for categorization of guns, but no difference for toys. The results of the parallel replication attempt are compatible with the results of the rescue experiment. 
+
+Interestingly, the sample of the parallel replication attempt (effective N = 161) was racially and ethnically diverse, which is different from the original study and the 1st and rescue replication attempts. Although a significant interaction was present in the full sample, it was not present when analyzing the white subset (N = 23) of the sample separately. Concerns of statistical power could explain a lack of effect in this subsample. 
+
+According to LeBel et al.'s (2018) taxonomy of replications, this study falls under a "Very Close Replication (Procedure or physical setting is different)". In a scale of 0-1, the rating given to this replication attempt it 0.75. The was effect replicated for guns, but not for toys, and with a much smaller magnitude. Qualitatively, however, the interpretation of the finding remains similar, as in it would be reasonable to affirm that study participants reacted faster to categorize guns after seeing the face of a black boy versus after seeing the face of a white boy. 
+
+## Mini meta-analysis
+Combining across the original paper, 1st replication, rescue replication, and parallel replication what is the aggregate effect size? 
+
+```{r, message = F}
+library(metafor)
+#install.packages("MBESS")
+library(MBESS)
+#install.packages("sjstats")
+library(sjstats)
+```
+
+Calculating partial eta sq with confidence intervals
+```{r, results='hide'}
+## original
+ci.pvaf(F.value=17.21, df.1=1, df.2=62, N=64, conf.level=.95)
+
+## 1st replication
+# calculating unreported partial eta sq based on anova variances:
+0.000127/(0.000127+0.020138)
+ci.pvaf(F.value=0.057, df.1=1, df.2=23, N=26, conf.level=.95)
+
+
+summary(aov_model)
+# rescue
+effectsize::eta_squared(aov_model)
+ci.pvaf(F.value=3.552, df.1=1, df.2=54, N=56, conf.level=.95)
+
+# parallel replication
+effectsize::eta_squared(aov_model_par)
+ci.pvaf(F.value=4.34, df.1=1, df.2=160, N=162, conf.level=.95)
+
+
+# other option for ci (same results)
+#apaTables::get.ci.partial.eta.squared(F.value=4.34, df1=1, df2=160, conf.level=.95)
+
+```
+
+Creating dataset
+```{r}
+d_meta <- tibble(
+  Study = c("Original", "1st replication", "Rescue", "Parallel"),
+  N = c(63, 26, 54, 161),
+  Effect_Size = c(0.22, 0.006, 0.06, 0.03),
+  ci.lo = c(0.06, 0, 0, 0),
+  ci.hi = c(0.37, 0.13, 0.21, 0.09)
+)
+```
+
+### Mini meta-analysis
+
+In this section, I aggregate results of the original study, the first replication attempt and the present rescue replication attempt. 
+
+
+```{r}
+for_meta <- d_meta %>%  
+  mutate(se=(ci.hi-ci.lo)/(2*1.96))
+
+mini_meta_mod <- rma(yi=Effect_Size, sei=se, slab=Study, data=for_meta)
+
+summary(mini_meta_mod)
+```
+
+
+### Plot
+```{r}
+aggregate <- tibble(Study="Aggregate", Effect_Size=mini_meta_mod$b,
+                    ci.lo=mini_meta_mod$ci.lb, ci.hi=mini_meta_mod$ci.ub,N=sum(d_meta$N))
+
+for_plot <- d_meta %>% 
+  bind_rows(aggregate) %>% 
+  mutate(Study=factor(Study, levels=c("Aggregate", "Original", "1st replication", "Rescue", "Parallel")))
+
+
+ggplot(for_plot,aes(x=Study, y=Effect_Size, ymin=ci.lo, ymax=ci.hi, size=N)) +
+  geom_errorbar(colour='darkgray',size=.5,width=.25)+
+  geom_point(data=for_plot |> filter(Study!="Aggregate"))+
+  geom_point(data=for_plot |> filter(Study=="Aggregate"),shape=18, color="red")+
+  coord_flip()+
+  scale_size_area()+
+  geom_hline(yintercept=0,color="black")+
+  theme(legend.position = "none")+
+  geom_vline(xintercept = 1.5, lty=2)+
+  labs(y="Partial eta squared of repeated measures ANOVA", x="")
+
+
+```
+Results of the meta-analysis indicate an aggregate estimate of a partial eta squared of 0.036 for the interaction of race of prime and categorization of objects in predicting log reaction times. This estimate is significant at the 5% level. According to guidelines for interpreting partial eta squared (Miles & Shelvin, 2001), a partial eta squared of 0.036 is between a small (0.01) and medium (0.06) effect. Although this effect is substantially smaller than the one reported in the original study, the weight of the evidence points towards a small to medium effect that is significantly different from zero. 
+
+### Commentary and conclusion
+
+This rescue project aimed at investigating whether the race of a priming face image (Black vs. white) altered the speed necessary for participants to categorize toys and guns. There was some evidence of a statistically significant effect from Prolific data alone. When aggregated with data from the original study, the first replication attempt, and the parallel replication effort from the original author, the weight of the evidence pointed toward a small to medium effect, with a 95% confidence interval that did not include zero. Interestingly, the effect seemed to be present for a racially diverse sample of study participants, extrapolating from the original, the 1st replication, and the rescue attempt, which only included white participants.
+
+One additional comment is the fact that the 1st replication attempt had very low quality data, a very small sample size and accuracy rates compatible with chance, so this data might be adding noise to the overall estimate of the aggregated effect. 
+
+
