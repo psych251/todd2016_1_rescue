@@ -4,6 +4,8 @@ Facilitate the Identification of Threatening
 Stimuli? by Todd et al. (2016, Psychological Science)"
 author: "Mateus Mazzaferro (mazzafe@stanford.edu)"
 date: "`r format(Sys.time(), '%B %d, %Y')`"
+project:
+  execute-dir: project
 format:
   html:
     toc: true
@@ -24,13 +26,19 @@ Challenges involved recreating the experimental paradigm in line with the origin
 
 [Link to experiment on Pavlovia](https://run.pavlovia.org/mateusmazza/rescue_project/)
 
+[Link to Pre-Data Collection Registration in OSF](https://osf.io/vc6py)
+
 ## Summary of prior replication attempt
 
 The prior replication attempt had a substantially smaller sample size (effective N=26) than the original study (N=63). This decision was based on a a priori power analysis indicating a sample size of N = 24 for 95% power. Additionally, the original study was conducted in an in-person lab setting, while the replication attempt was conducted online using Mechanical Turk. All other relevant criteria seem to be equal or comparable to the original study. 
 
+### Other replication attempts
+
+No other replication attempts of this experiment were found. Upon contact with the original author, they offered to run a parallel replication attempt at their university with an undergraduate student sample. The results of this parallel replication attempt are included in this report. 
+
 ## Methods
 
-“White participants completed sequential priming tasks in which they categorized threatening and non-threatening objects (toys and guns) and words after brief presentations of Black and White children’s faces.”
+“White participants completed sequential priming tasks in which they categorized threatening and non-threatening objects (toys and guns) and words after brief presentations of Black and White children’s faces.” Participants were instructed to press 
 
 The present rescue attempt will keep the same methodological paradigm and recode the original experiment in PsychoPy. Additionally, this rescue attempt will collect data online using Prolific as opposed to Mechanical Turk.
 
@@ -59,9 +67,9 @@ We will recruit 66 participants to be close to the N of the original study.  We 
 
 ### Procedure	
 
-Instead of beginning with a blank screen (500 ms) like in the original article, we began with a screen that instructed participants to “Press the space bar to continue” after each trial. The rest of the procedures were the same. After feedback from the original author, we edited visual features of the experimental paradigm to the best of our ability to match the original experiment. 
+Instead of beginning with a blank screen (500 ms) like in the original article, we began with a screen that instructed participants to “Press the space bar to continue” after each trial. The rest of the procedures were the same. Participants were instructed to place their fingers on the P and Q keys on their keyboard, and told they would have to quickly press "P" when seeing a toy and "Q" when seeing a gun. After feedback from the original author, we edited visual features of the experimental paradigm to the best of our ability to match the original experiment. 
 
-“Each trial sequence began [..] followed by a face prime (200 ms), then a target object (200 ms), and finally a pattern mask (which remained on screen until participants responded). If participants did not respond within 500 ms, a message (“Please respond faster!”) appeared for 1 s. Each of the 12 face primes was paired once with each of the 12 target objects, which resulted in 144 randomly ordered experimental trials. Eight practice trials preceded the experimental trials.”
+“Each trial sequence began [..] followed by a face prime (200 ms), then a target object (200 ms), and finally a pattern mask (which remained on screen until participants responded). If participants did not respond within 500 ms, a message (“Please respond faster!”) appeared for 1 s. Each of the 12 face primes was paired once with each of the 12 target objects, which resulted in 144 randomly ordered experimental trials. Eight practice trials preceded the experimental trials.” After each trial, including the ones participants did not respond fast enough, participants had to press the space bar to move on to the next trial. 
 
 This replication included 12 practice trials instead of 8. 
 
@@ -104,27 +112,29 @@ One important observation is that this data had to be recollected due to an erro
 ### Data preparation
 
 Data was imported and wrangled into a tidy format, renaming variables for better interpretability. Categorical variables were factored and relabeled. 
+
 Loading libraries
 ```{r, message=FALSE}
-### Load Relevant Libraries and Functions
+### Load Relevant Libraries
 library(tidyverse)
-#install.packages("rstatix")
 library(rstatix)
 library(ggplot2)
-#install.packages("ggpubr")
 library(ggpubr)
 library(lme4)
-#install.packages("ez")
 library(ez)
 library(ggthemes)
-#install.packages("reghelper")
 library(reghelper)
-#install.packages("apaTables")
 library(apaTables)
+library(optimx)
+library(forcats)
+library(here)
 ```
 
 Importing data
-```{r, message=FALSE}
+```{r, message=FALSE, eval=FALSE, include=FALSE}
+
+#### reading data in personal computer ######
+#### DO NOT RUN #####
 dir_path <- "C:/Users/mateu/OneDrive/Desktop/Stanford/01_Fall 2023/Psych Exp Methods/data_prolific_v2"
 csv_files <- list.files(dir_path, pattern = "2023-12-12.*\\.csv$", full.names = TRUE)
 combined_data <- data.frame()
@@ -138,14 +148,27 @@ for (file in csv_files) {
 combined_data_raw <- combined_data
 ```
 
-Writing anonimized dataset for reproducibility
-```{r}
+```{r, eval=FALSE, include=FALSE}
 
-data_csv <- combined_data_raw %>% 
-  select(-c(participant,session,study_id, OS)) 
+# Writing anonimized dataset for reproducibility
+
+#### DO NOT RUN #####
+
+data_csv <- combined_data_raw
+
+data_csv$participant <- data_csv$participant %>% 
+  factor() %>% 
+  fct_anon() 
+
+data_csv <- data_csv %>% 
+  select(-c(session, OS, study_id, frameRate))
 
 write.csv(data_csv, "C:/Users/mateu/todd2016_1_rescue/data\\data_csv.csv")
 
+```
+
+```{r}
+combined_data <- read_csv(here("data", "data_csv.csv"))
 ```
 
 How many participants in the dataset?
@@ -176,9 +199,9 @@ non_whites
 ```{r}
 processed_dat <- combined_data %>% 
   #filtering non-whites
-  filter(!(participant == "5c97df1f9e1eff001662ed96" |
-             participant == "603421c858a3bd213d7c24b2"|
-             participant == "613e002e81f4b2409b531dbd"))
+  filter(!(participant == "51" |
+             participant == "24"|
+             participant == "05"))
 
 # N check
 t2 <- table(processed_dat$participant)
@@ -278,6 +301,7 @@ sum_dat <- processed_dat %>%
   get_summary_stats(LogRT, type = "mean_sd")
 
 sum_dat
+
 ```
 
 
@@ -291,17 +315,19 @@ sum_dat_plot <- processed_dat %>%
   group_by(StimObj, StimRace) %>%
   summarise( 
     n=n(),
-    mean=mean(ReactionTime),
+    MeanRT=mean(ReactionTime),
     sd=sd(ReactionTime)
   ) %>%
   mutate( se=sd/sqrt(n))  %>%
   mutate( ci=se * qt((1-0.05)/2 + .5, n-1))
 
+sum_dat_plot
+
 
 barplot_rescue <- sum_dat_plot %>% 
-  ggplot(aes(x=StimObj, y=mean, fill=StimRace)) +
+  ggplot(aes(x=StimObj, y=MeanRT, fill=StimRace)) +
   geom_bar(stat = "identity", position=position_dodge()) +
-  geom_errorbar(aes(ymin=mean-ci, ymax=mean+ci), width=.2,
+  geom_errorbar(aes(ymin=MeanRT-ci, ymax=MeanRT+ci), width=.2,
                  position=position_dodge(.9)) +
   ggthemes::theme_few() +
   coord_cartesian( ylim = c(0.15, 0.5)) + 
@@ -331,24 +357,6 @@ summary(aov_model)
 
 Interaction is marginally significant (p = 0.06) with this model. 
 
-
-### Exploratory analysis
-
-Now considering a mixed-effects model that is more appropriate to handle unbalanced design:
-
-```{r}
-
-# Consider this model
-
-lmm <- lmerTest::lmer( data = processed_dat, 
-      LogRT ~ StimObj*StimRace + (1|ID))
-
-summary(lmm)
-
-simple_slopes(lmm)
-
-```
-In this model, we see a significant interaction of object and race of prime at the 1% level. Simple slopes analysis indicates there is an effect of race for gun, but not for toy. 
 
 ## Parallel replication
 
@@ -450,17 +458,19 @@ sum_dat_plot_par <- data_par %>%
   group_by(race_prime, target) %>%
   summarise( 
     n=n(),
-    mean=mean(RT),
+    MeanRT=mean(RT),
     sd=sd(RT)
   ) %>%
   mutate( se=sd/sqrt(n))  %>%
   mutate( ci=se * qt((1-0.05)/2 + .5, n-1))
 
+sum_dat_plot_par
+
 
 barplot_par <- sum_dat_plot_par %>% 
-  ggplot(aes(x=target, y=mean, fill=race_prime)) +
+  ggplot(aes(x=target, y=MeanRT, fill=race_prime)) +
   geom_bar(stat = "identity", position=position_dodge()) +
-  geom_errorbar(aes(ymin=mean-ci, ymax=mean+ci), width=.2,
+  geom_errorbar(aes(ymin=MeanRT-ci, ymax=MeanRT+ci), width=.2,
                  position=position_dodge(.9)) +
   ggthemes::theme_few() +
   guides(fill = F) +
@@ -489,19 +499,46 @@ summary(aov_model_par)
 ```
 Interaction is significant at the 5% level in this model. 
 
-### Exploratory analysis of parallel replication
+### Exploratory analysis of rescue replication
+
+Now considering a mixed-effects model that is more appropriate to handle unbalanced design:
+
 ```{r}
+
+# Consider this model
+
+lmm <- lmerTest::lmer( data = processed_dat, 
+      LogRT ~ StimObj*StimRace + (StimObj|ID))
+
+summary(lmm)
+
+simple_slopes(lmm)
+
+
+```
+In this model, we see a significant interaction of object and race of prime at the 1% level. Simple slopes analysis indicates there is an effect of race for gun, but not for toy. 
+
+OBS: A decision was made to include a random intercept and a random coefficient for StimObj (i.e., gun vs. toy) but not for StimRace or the interaction due to issues with singularity in the model. 
+
+### Exploratory analysis of parallel replication
+```{r, warning=FALSE}
 # Consider this model
 
 lmm_par <- lmerTest::lmer( data = data_par, 
-      LogRT ~ target*race_prime + (1|Subj))
+      LogRT ~ target*race_prime + (target|Subj))
 
 summary(lmm_par) 
 
 simple_slopes(lmm_par) 
 
+
+
+-1.962e-02 / sqrt(0.038056+0.004833) 
+
 ```
 Interaction is marginally significant in this model and simple slopes indicates an effect of race for guns. 
+
+OBS: A decision was made to include a random intercept and a random coefficient for target (i.e., gun vs. toy) but not for race_prime or the interaction due to issues with singularity in the model. 
 
 Below I investigate the effect by subsampling only white participants. 
 ```{r}
@@ -614,7 +651,7 @@ Additionally, the author of the original study ran a parallel replication attemp
 
 Interestingly, the sample of the parallel replication attempt (effective N = 161) was racially and ethnically diverse, which is different from the original study and the 1st and rescue replication attempts. Although a significant interaction was present in the full sample, it was not present when analyzing the white subset (N = 23) of the sample separately. Concerns of statistical power could explain a lack of effect in this subsample. 
 
-According to LeBel et al.'s (2018) taxonomy of replications, this study falls under a "Very Close Replication (Procedure or physical setting is different)". In a scale of 0-1, the rating given to this replication attempt it 0.75. The was effect replicated for guns, but not for toys, and with a much smaller magnitude. Qualitatively, however, the interpretation of the finding remains similar, as in it would be reasonable to affirm that study participants reacted faster to categorize guns after seeing the face of a black boy versus after seeing the face of a white boy. 
+According to LeBel et al.'s (2018) taxonomy of replications, this study falls under a "Very Close Replication (Procedure or physical setting is different)". In a scale of 0-1, the rating given to this replication attempt it 0.75. The effect was replicated for guns, but not for toys, and with a much smaller magnitude. Qualitatively, however, the interpretation of the finding remains similar, as in it would be reasonable to affirm that study participants reacted faster to categorize guns after seeing the face of a black boy versus after seeing the face of a white boy. 
 
 ## Mini meta-analysis
 Combining across the original paper, 1st replication, rescue replication, and parallel replication what is the aggregate effect size? 
@@ -638,7 +675,6 @@ ci.pvaf(F.value=17.21, df.1=1, df.2=62, N=64, conf.level=.95)
 ci.pvaf(F.value=0.057, df.1=1, df.2=23, N=26, conf.level=.95)
 
 
-summary(aov_model)
 # rescue
 effectsize::eta_squared(aov_model)
 ci.pvaf(F.value=3.552, df.1=1, df.2=54, N=56, conf.level=.95)
@@ -649,7 +685,7 @@ ci.pvaf(F.value=4.34, df.1=1, df.2=160, N=162, conf.level=.95)
 
 
 # other option for ci (same results)
-#apaTables::get.ci.partial.eta.squared(F.value=4.34, df1=1, df2=160, conf.level=.95)
+# apaTables::get.ci.partial.eta.squared(F.value=4.34, df1=1, df2=160, conf.level=.95)
 
 ```
 
