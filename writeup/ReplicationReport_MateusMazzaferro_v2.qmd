@@ -38,7 +38,7 @@ No other replication attempts of this experiment were found. Upon contact with t
 
 ## Methods
 
-“White participants completed sequential priming tasks in which they categorized threatening and non-threatening objects (toys and guns) and words after brief presentations of Black and White children’s faces.” Participants were instructed to press 
+“White participants completed sequential priming tasks in which they categorized threatening and non-threatening objects (toys and guns) and words after brief presentations of Black and White children’s faces.” 
 
 The present rescue attempt will keep the same methodological paradigm and recode the original experiment in PsychoPy. Additionally, this rescue attempt will collect data online using Prolific as opposed to Mechanical Turk.
 
@@ -368,7 +368,7 @@ Importantly, this undergraduate convenience sample is not homogeneously white, a
 
 ```{r}
 
-demo_par <- readxl::read_excel("C:/Users/mateu/todd2016_1_rescue/data/parallel_replication_demographics.xlsx") %>% 
+demo_par <- readxl::read_excel(here("data","parallel_replication_demographics.xlsx")) %>% 
   select(Subject, subrace, subrace_open) %>% 
   mutate(race_ethnicity = case_when(
     subrace == 1 ~ "Asian, Asian American, or Pacific Islander",
@@ -389,7 +389,7 @@ Only 13% (N = 23) of the sample is white. For power purposes, I will do the main
 
 
 ```{r}
-data_par_raw <- readxl::read_excel("C:/Users/mateu/todd2016_1_rescue/data/parallel_replication_data.xlsx")
+data_par_raw <- readxl::read_excel(here("data","parallel_replication_data.xlsx"))
 
 data_par <- data_par_raw %>% 
   select(Subj, race_prime, target, RT, Correct) 
